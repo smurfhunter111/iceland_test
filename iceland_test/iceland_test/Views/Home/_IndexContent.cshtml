@@ -1,0 +1,21 @@
+﻿@model InventoryPageModel
+
+<h1>Day: @Model.Settings.Day</h1>
+
+@{
+    if (Model.Settings.Concert > -1)
+    {
+        <div class="text-danger">We had concert on day <span>@Model.Settings.Concert</span>!</div>
+    }
+}
+
+<partial name="_InventoryGrid" model="@Model.Inventory" />
+
+<input type="button" class="btn btn-primary" onclick="nextDayMovement()" value="Move to the next day">
+
+<input type="button" class="btn btn-primary" onclick="@Html.Raw(string.Format("tonightConcert({0})", Model.Settings.Day))" value="Let's have concert tonight">
+
+<a class="btn btn-primary" asp-action="Index" asp-controller="Home">Reset</a>
+
+<input type="hidden" id="hdfDay" value="@Model.Settings.Day" />
+<input type="hidden" id="hdfConcert" value="@Model.Settings.Concert" />

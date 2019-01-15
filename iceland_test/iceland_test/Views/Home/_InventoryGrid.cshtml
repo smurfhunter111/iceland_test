@@ -1,0 +1,45 @@
+﻿@model IEnumerable<InventoryItem>
+
+<table class="table-bordered table table-striped">
+
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Sell In</th>
+            <th>Quality</th>
+        </tr>
+    </thead>
+
+    @{
+        var i = 0;
+
+        foreach (var item in Model)
+        {
+            var warningClass = string.Empty;
+            if (item.Name == InventoryModel.ERROR_MESSAGE_ITEM_INVALID)
+            {
+                warningClass = "background-red colour-white";
+            }
+
+            <tr>
+                <td class="@warningClass">
+                    <div id="divInventoryName_@i">@item.Name</div>
+                </td>
+                <td class="@warningClass @InventoryModel.ResultColouringClass(item.SellIn)">
+                    <div id="divInventorySellIn_@i">@item.SellIn</div>
+                </td>
+                <td class="@warningClass @InventoryModel.ResultColouringClass(item.Quality)">
+                    <div id="divInventoryQuality_@i">@item.Quality</div>
+
+                    @* hidden status *@
+                    <input type="hidden" id="hdfInventoryStatus_@i" value="@item.Status" />
+                </td>
+            </tr>
+
+            i++;
+        }
+    }
+
+</table>
+
+<input type="hidden" id="hdfInventoryCount" value="@i" />
